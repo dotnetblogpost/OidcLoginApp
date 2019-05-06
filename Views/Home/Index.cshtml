@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        @if (!ViewContext.HttpContext.User.Identity.IsAuthenticated)
+        {
+            <a class="btn btn-primary"
+               asp-controller="Home"
+               asp-action="Challenge">External Provider Login (OIDC)</a>
+        }
+        else
+        {
+            <h1>Hello, Authenticated User!!</h1>
+
+            <h3>Claims</h3>
+            <dl>
+                @foreach (var claim in ViewContext.HttpContext.User.Claims)
+                {
+                    <dt>@claim.Type</dt>
+                    <dd>@claim.Value</dd>
+                }
+            </dl>
+            <a class="btn btn-primary"
+               asp-controller="Home"
+               asp-action="Logout">External Provider Logout (OIDC)</a>
+        }
+    </div>
